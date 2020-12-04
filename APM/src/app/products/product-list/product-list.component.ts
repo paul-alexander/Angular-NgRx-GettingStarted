@@ -10,6 +10,8 @@ import { ProductService } from '../product.service';
 //note State is Products defined State that extends App State
 import { getShowProductCode, State } from '../state/product.reducer';
 
+import * as ProductActions from '../state/product.actions'
+
 @Component({
   selector: 'pm-product-list',
   templateUrl: './product-list.component.html',
@@ -53,12 +55,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   checkChanged(): void {
-    //this.displayCode = !this.displayCode;
-
-    //TODO define Action instead of hard coded string
-    this.store.dispatch({
-      type: '[Product] Toggle Product Code',
-    });
+    this.store.dispatch(ProductActions.toggleProductCode());
   }
 
   newProduct(): void {
