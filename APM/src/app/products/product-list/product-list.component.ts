@@ -7,6 +7,9 @@ import { Subscription } from 'rxjs';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 
+//note State is Products defined State that extends App State
+import { State } from '../state/product.reducer';
+
 @Component({
   selector: 'pm-product-list',
   templateUrl: './product-list.component.html',
@@ -25,7 +28,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   sub: Subscription;
 
   constructor(
-    private store: Store<any>,
+    private store: Store<State>,
     private productService: ProductService
   ) {}
 
