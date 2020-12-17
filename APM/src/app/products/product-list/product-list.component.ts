@@ -6,7 +6,7 @@ import { Product } from '../product';
 //import { ProductService } from '../product.service';
 
 //note State is Products defined State that extends App State
-import { getCurrentProduct, getProducts, getShowProductCode, State } from '../state/product.reducer';
+import { getCurrentProduct, getError, getProducts, getShowProductCode, State } from '../state/product.reducer';
 
 import * as ProductActions from '../state/product.actions'
 import { Observable } from 'rxjs';
@@ -18,7 +18,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductListComponent implements OnInit {
   pageTitle = 'Products';
-  errorMessage: string;
+  //errorMessage: string;
 
   // displayCode: boolean;
 
@@ -29,6 +29,8 @@ export class ProductListComponent implements OnInit {
   products$: Observable<Product[]>;
   selectedProduct$: Observable<Product>;
   displayCode$: Observable<boolean>;
+  errorMessage$: Observable<string>;
+
 
   constructor(
     private store: Store<State>,
@@ -52,7 +54,9 @@ export class ProductListComponent implements OnInit {
     //   error: (err) => (this.errorMessage = err),
     // });
 
-    this.products$ = this.store.select(getProducts)
+    this.errorMessage$ = this.store.select(getError);
+
+    this.products$ = this.store.select(getProducts);
     this.store.dispatch(ProductActions.loadProducts());
 
 
