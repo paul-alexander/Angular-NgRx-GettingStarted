@@ -138,5 +138,37 @@ export const productReducer = createReducer<ProductState>(
         error: action.error,
       };
     }
-  )
+  ),
+
+
+  on(
+    ProductActions.updateProductSuccess,
+    (state, action): ProductState => {
+
+      //copy of state products but ensure the updated product is used to replace existing
+      // .map creates new Array and does not mutate the existing state
+      const updatedProducts = state.products.map(
+        item => action.product.id === item.id ? action.product : item
+      );
+
+      return {
+        ...state,
+        products: updatedProducts,
+        currentProductId: action.product.id, 
+        error: '',
+      };
+    }
+  ),
+
+  on(
+    ProductActions.updateProductFailure,
+    (state, action): ProductState => {
+      return {
+        ...state,
+        error: action.error,
+      };
+    }
+  ),
+
+
 );
