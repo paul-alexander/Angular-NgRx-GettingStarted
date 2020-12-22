@@ -47,4 +47,35 @@ export class ProductEffects {
   });
 
 
+  deleteProducts$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.deleteProduct),
+
+      concatMap(action =>
+        this.productService
+          .deleteProduct( action.productId )
+          .pipe(
+            map(product => ProductActions.deleteProductSuccess({ productId: action.productId })),
+            catchError(error => of(ProductActions.deleteProductFailure({error})))
+          )
+      )
+    );
+  });
+
+
+  createProducts$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(ProductActions.createProduct),
+
+      concatMap(action =>
+        this.productService
+          .createProduct( action.product )
+          .pipe(
+            map(product => ProductActions.createProductSuccess({ product: product })),
+            catchError(error => of(ProductActions.createProductFailure({error})))
+          )
+      )
+    );
+  });
+
 }
